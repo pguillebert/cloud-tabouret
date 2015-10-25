@@ -1,10 +1,24 @@
 ---
-- hosts: 127.0.0.1
+- name: "Build application locally"
+  hosts: 127.0.0.1
   connection: local
-  vars:
-    app_name: "tabouret"
-    app_repo: "pguillebert/tabouret.git"
-
+  vars_files: [ tabouret_config.yml ]
   tasks:
     - include: tasks/build-jar.yml
-    - debug: var=app_jar
+
+- name: "Launch EC2 instances"
+  hosts: 127.0.0.1
+  connection: local
+  vars_files: [ tabouret_config.yml ]
+  tasks:
+    - include: tasks/launch-ec2-instances.yml
+
+
+- name: "Configure EC2 instances"
+  hosts: launched-instances
+  vars_files: [ tabouret_config.yml ]
+  remote_user: "ubuntu"
+  become: true
+  gather_facts: true
+  tasks:
+    - include: tasks/configure-ec2-instances.yml

@@ -1,0 +1,4 @@
+---
+
+- name: "test1"
+  action: file path=/thisworks state=directory

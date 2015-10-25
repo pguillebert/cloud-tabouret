@@ -1,0 +1,9 @@
+---
+
+app_name: "tabouret"
+app_repo: "pguillebert/tabouret.git"
+app_count: 1
+ec2_keypair: "pguillebert"
+ec2_instance_type: "t2.micro"
+ec2_ami: "ami-6e67845d"
+ec2_region: "us-west-2"
