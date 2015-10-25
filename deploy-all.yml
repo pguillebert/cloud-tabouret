@@ -1,6 +1,6 @@
 ---
 - name: "Build application locally"
-  hosts: 127.0.0.1
+  hosts: localhost
   connection: local
   vars_files: [ tabouret_config.yml ]
   tasks:

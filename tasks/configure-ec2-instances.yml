@@ -1,4 +1,16 @@
 ---
 
-- name: "test1"
-  action: file path=/thisworks state=directory
+- name: "Install Java 8"
+  action: apt name=openjdk-8-jre-headless update_cache=yes
+
+- name: "Copy {{ hostvars['localhost'].app_jar }} to target server"
+  # TODO : a dedicated user would be more secure
+  # TODO : and a dedicated install directory would be cleaner
+  action: copy src="{{ hostvars['localhost'].app_jar }}" dest="/home/ubuntu" owner=ubuntu group=ubuntu
+
+- name: "Copy Systemd service definition"
+  # TODO use a template to parametrize java options and jar name/version in the service wrapper
+  action: copy src="files/tabouret.service" dest="/lib/systemd/system/{{ hostvars['localhost'].app_name }}" owner=root group=root
+
+- name: "Start service {{ hostvars['localhost'].app_name }}"
+  service: name="{{ hostvars['localhost'].app_name }}" state=started

@@ -9,6 +9,7 @@
 
       sudo pip install boto
 
+- a boto configuration in `~/.aws/credentials` with AWS credentials.
 - A RSA keypair installed in the chosen region.
 
 ## OS information
@@ -61,3 +62,15 @@ To start the deployment of the application:
 
 Here, the private key of the configured keypair will be used by ansible
 to access the instances.
+
+## Shortcomings
+
+Obviously, all of this has a hackish smell to it. What could have been better with
+more control on the setup, and more time :
+
+- Use a central reference for built packages (for instance, a Jenkins that pushes
+  jars into S3)
+- Use internal networking instead of public IPs (needs VPN with VPC)
+- Better generalization using templating to share configuration items
+  with similar java services
+- Scale instances up and down using ASGs or Ansible `count` advanced techniques

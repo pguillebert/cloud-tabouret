@@ -20,8 +20,10 @@
         to_port:   -1 # icmp subtype, -1 = any subtype
         cidr_ip: 0.0.0.0/0
       - proto: all
-        # the containing group name may be specified here
         group_name: "{{ app_name }}-instances-sg"
+    rules_egress:
+      - proto: all
+        cidr_ip: 0.0.0.0/0
 
 - name: "Launch {{ app_name }} instances"
   action: ec2
@@ -36,6 +38,7 @@
     wait_timeout: 500
     instance_tags:
       toyinstance: pguillebert
+      env: dev
   register: ec2
 
 - name: "Add new instance to host group launched-instances"
