@@ -3,17 +3,20 @@
   ## Local playbook to build an uberjar using lein.
   ## This step can (and should) also be done with Jenkins for instance.
 
+- name: "Ensure temp path /tmp/{{ app_name }} is clean"
+  file: path=/tmp/{{ app_name }} state=absent
 
-# Ensure temp path is clean
-- file: path=/tmp/{{ app_name }} state=absent
-# Clone the repo in a temp directory
-- git: repo=https://github.com/{{ app_repo }} dest=/tmp/{{ app_name }}
-# Run lein uberjar in the temp directory
-- shell: lein do clean, uberjar
+- name: "Clone {{ app_repo }} repo in a temp directory"
+  git: repo=https://github.com/{{ app_repo }} dest=/tmp/{{ app_name }}
+
+- name: "Run lein uberjar in the temp directory"
+  shell: lein do clean, uberjar
   args:
     chdir: /tmp/{{ app_name }}
-# Retrieve the exact filename
-- find: paths=/tmp/{{ app_name }}/target/ patterns="*standalone*"
+
+- name: "Retrieve the exact jar filename"
+  find: paths=/tmp/{{ app_name }}/target/ patterns="*standalone*"
   register: st
-# Set a fact with the path to the jar just built
-- set_fact: app_jar={{ st.files[0].path }}
+
+- name: "Set a fact with the path to the jar: {{ st.files[0].path }}"
+  set_fact: app_jar={{ st.files[0].path }}
