@@ -2,4 +2,4 @@
 Description=Tabouret service
 
 [Service]
-ExecStart=/usr/bin/java -Dport=3003 -jar /home/ubuntu/tabouret-0.1.0-standalone.jar
+ExecStart=/usr/bin/java -Dport={{ hostvars['localhost'].app_port }} -jar /home/ubuntu/tabouret-0.1.0-standalone.jar

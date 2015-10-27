@@ -3,3 +3,15 @@
 - debug: var=groups['tabouret-instances']
 
 - debug: var=groups['tabouret-master']
+
+- name: "Install Nginx"
+  action: apt name=nginx update_cache=yes
+
+- name: "Configure Nginx site"
+  action: template src="files/tabouret.nginx" dest="/etc/nginx/sites-available/tabouret" owner=root group=root
+
+- name: "Enable Nginx site"
+  action: file state=link src=/etc/nginx/sites-available/tabouret dest=/etc/nginx/sites-enabled/tabouret
+
+- name: "Restart Nginx"
+  service: name="nginx" state=restarted

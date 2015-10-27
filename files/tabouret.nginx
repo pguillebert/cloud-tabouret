@@ -1,0 +1,13 @@
+upstream backend {
+{% for host in groups['tabouret-instances'] %}
+    server {{ host }}:{{ hostvars['localhost'].app_port }};
+{% endfor %}
+
+}
+
+server {
+    listen {{ hostvars['localhost'].app_port }};
+    location / {
+        proxy_pass http://backend;
+    }
+}

@@ -7,7 +7,7 @@
     - include: tasks/build-jar.yml
 
 - name: "Launch tabouret instances"
-  hosts: 127.0.0.1
+  hosts: localhost
   connection: local
   vars_files: [ tabouret_config.yml ]
   tasks:
@@ -28,7 +28,7 @@
     - include: tasks/install-tabouret-instances.yml
 
 - name: "Launch master instance"
-  hosts: 127.0.0.1
+  hosts: localhost
   connection: local
   vars_files: [ tabouret_config.yml ]
   tasks:
@@ -46,3 +46,13 @@
   gather_facts: true
   tasks:
     - include: tasks/install-tabouret-master.yml
+
+- name: "Describe en environment to the user"
+  hosts: localhost
+  vars_files: [ tabouret_config.yml ]
+  remote_user: "ubuntu"
+  become: true
+  gather_facts: true
+  tasks:
+    - debug: msg="############# tabouret master server is at {{ groups['tabouret-master'] }} port {{ app_port }}"
+    - debug: msg="############# tabouret instances servers are at {{ groups['tabouret-instances'] }} port {{ app_port }}"

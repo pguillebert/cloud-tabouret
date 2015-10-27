@@ -2,15 +2,24 @@
 
 ## Prerequisites
 
-- ansible
-- lein
-- git
-- boto
+### ansible
+
+      git clone git://github.com/ansible/ansible.git -b devel --recursive ansible-bench
+
+### lein
+
+### git
+
+### boto
 
       sudo pip install boto
 
-- a boto configuration in `~/.aws/credentials` with AWS credentials.
-- A RSA keypair installed in the chosen region.
+- Install a boto configuration in `~/.aws/credentials` with AWS credentials.
+
+
+### AWS account
+
+Please install a RSA keypair installed in the chosen region.
 
 ## OS information
 
