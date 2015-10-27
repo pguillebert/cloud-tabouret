@@ -6,19 +6,43 @@
   tasks:
     - include: tasks/build-jar.yml
 
-- name: "Launch EC2 instances"
+- name: "Launch tabouret instances"
   hosts: 127.0.0.1
   connection: local
   vars_files: [ tabouret_config.yml ]
   tasks:
     - include: tasks/launch-ec2-instances.yml
 
+    - name: "Add new instances to host group tabouret-instances"
+      add_host: hostname={{ item.public_ip }} groupname=tabouret-instances
+      with_items: ec2.instances
 
-- name: "Configure EC2 instances"
-  hosts: launched-instances
+
+- name: "Install application: tabouret-instance"
+  hosts: tabouret-instances
   vars_files: [ tabouret_config.yml ]
   remote_user: "ubuntu"
   become: true
   gather_facts: true
   tasks:
-    - include: tasks/configure-ec2-instances.yml
+    - include: tasks/install-tabouret-instances.yml
+
+- name: "Launch master instance"
+  hosts: 127.0.0.1
+  connection: local
+  vars_files: [ tabouret_config.yml ]
+  tasks:
+    - include: tasks/launch-ec2-instances.yml app_count=1
+
+    - name: "Add new instance to host group tabouret-master"
+      add_host: hostname={{ item.public_ip }} groupname=tabouret-master
+      with_items: ec2.instances
+
+- name: "Install application: tabouret-master"
+  hosts: tabouret-master
+  vars_files: [ tabouret_config.yml ]
+  remote_user: "ubuntu"
+  become: true
+  gather_facts: true
+  tasks:
+    - include: tasks/install-tabouret-master.yml

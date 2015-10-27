@@ -10,7 +10,7 @@
 
 - name: "Copy Systemd service definition"
   # TODO use a template to parametrize java options and jar name/version in the service wrapper
-  action: copy src="files/tabouret.service" dest="/lib/systemd/system/{{ hostvars['localhost'].app_name }}" owner=root group=root
+  action: copy src="files/tabouret.service" dest="/lib/systemd/system/{{ hostvars['localhost'].app_name }}.service" owner=root group=root
 
 - name: "Start service {{ hostvars['localhost'].app_name }}"
   service: name="{{ hostvars['localhost'].app_name }}" state=started
