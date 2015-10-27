@@ -1,9 +1,5 @@
 ---
 
-- debug: var=groups['tabouret-instances']
-
-- debug: var=groups['tabouret-master']
-
 - name: "Install Nginx"
   action: apt name=nginx update_cache=yes
 
