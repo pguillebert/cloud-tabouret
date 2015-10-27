@@ -13,10 +13,3 @@
   shell: lein do clean, uberjar
   args:
     chdir: /tmp/{{ app_name }}
-
-- name: "Retrieve the exact jar filename"
-  find: paths=/tmp/{{ app_name }}/target/ patterns="*standalone*"
-  register: st
-
-- name: "Set a fact with the path to the jar: {{ st.files[0].path }}"
-  set_fact: app_jar={{ st.files[0].path }}
