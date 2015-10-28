@@ -54,6 +54,8 @@ The following keys are used :
 | `app_repo`          | Github repository of the webapp  | "pguillebert/tabouret.git"   |
 | `app_count`         | Number of instances to launch    | 2                            |
 | `app_port`          | TCP port for the application     | 3003                         |
+| `app_base_path`     | Base path of the HTTP REST client |                             |
+| `app_version`       | Version of the JAR to use        | "0.1.0"                      |
 | `ec2_keypair`       | AWS keypair name to use          | "pguillebert"                |
 | `ec2_instance_type` | Type of EC2 instance to use      | "t2.micro"                   |
 | `ec2_ami`           | AMI launched (cf OS information) | "ami-6e67845d"               |
